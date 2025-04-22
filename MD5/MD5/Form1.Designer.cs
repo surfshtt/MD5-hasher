@@ -64,28 +64,28 @@
             // 
             // textBox3
             // 
-            textBox3.Font = new Font("Segoe UI", 24F);
-            textBox3.Location = new Point(12, 153);
+            textBox3.Font = new Font("Segoe UI", 14F);
+            textBox3.Location = new Point(12, 156);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(294, 50);
+            textBox3.Size = new Size(399, 32);
             textBox3.TabIndex = 4;
             // 
             // decrypt
             // 
             decrypt.Font = new Font("Segoe UI", 20F);
-            decrypt.Location = new Point(12, 219);
+            decrypt.Location = new Point(12, 212);
             decrypt.Name = "decrypt";
-            decrypt.Size = new Size(202, 53);
+            decrypt.Size = new Size(228, 53);
             decrypt.TabIndex = 3;
-            decrypt.Text = "Зашифровать";
+            decrypt.Text = "Расшифровать";
             decrypt.UseVisualStyleBackColor = true;
-            decrypt.Click += decrypt_Click;
+            //decrypt.Click += decrypt_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(319, 284);
+            ClientSize = new Size(423, 281);
             Controls.Add(textBox3);
             Controls.Add(decrypt);
             Controls.Add(textBox2);

@@ -14,3 +14,4 @@
 \\mcb.local\RoamingProfiles$\StudentsData\1227154\Desktop\MD5\MD5-encryptor-decryptor\MD5\MD5\obj\Debug\net8.0-windows\MD5.pdb
 \\mcb.local\RoamingProfiles$\StudentsData\1227154\Desktop\MD5\MD5-encryptor-decryptor\MD5\MD5\obj\Debug\net8.0-windows\MD5.genruntimeconfig.cache
 \\mcb.local\RoamingProfiles$\StudentsData\1227154\Desktop\MD5\MD5-encryptor-decryptor\MD5\MD5\obj\Debug\net8.0-windows\ref\MD5.dll
+\\mcb.local\RoamingProfiles$\StudentsData\1227154\Desktop\MD5\MD5-encryptor-decryptor\MD5\MD5\obj\Debug\net8.0-windows\MD5.sourcelink.json
