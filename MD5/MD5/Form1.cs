@@ -14,7 +14,7 @@ namespace MD5
         private uint h2 = 0x98badcfe;
         private uint h3 = 0x10325476;
 
-        private readonly uint[] K = { //константы 32бита??
+        private readonly uint[] K = { //константы 32бита?? корни простых чисел
             0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
             0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
             0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -42,25 +42,27 @@ namespace MD5
 
         private void encrypt_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text != "")
-            {
-                textBox3.Text = enc(textBox2.Text);
-            }
+            textBox3.Text = enc(textBox2.Text);
         }
 
-        private List<uint> podgotovk(string msg)
+        private uint[] podgotovk(string msg)
         {
             var bytes = new List<byte>();
             byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
+
             bytes.AddRange(msgBytes);
-            bytes.Add(0x80);
+
+            bytes.Add(0x80); 
+
             while ((bytes.Count * 8) % 512 != 448)
             {
                 bytes.Add(0x00);
             }
-            ulong bitLength = (ulong)msgBytes.Length * 8;
+
+            ulong bitLength = (ulong)msgBytes.Length * 8; // бит в байт 1 к 8
             bytes.AddRange(BitConverter.GetBytes(bitLength));
-            var blocks = new List<uint>();
+
+            List<uint> blocks = new List<uint>();
             for (int i = 0; i < bytes.Count; i += 4)
             {
                 uint block = 0;
@@ -73,65 +75,62 @@ namespace MD5
                 }
                 blocks.Add(block);
             }
-            return blocks;
+            return blocks.ToArray();
+        }
+        private uint sdvigLev(uint x, int c)
+        {
+            return (x << c) | (x >> (32 - c));
         }
 
         private string enc(string input)
         {
             uint a = h0, b = h1, c = h2, d = h3;
-            List<uint> blocks = podgotovk(input);
-            for (int i = 0; i < blocks.Count; i += 16)
+            uint[] blocks = podgotovk(input);
+
+            uint aa = a, bb = b, cc = c, dd = d;
+            for (int j = 0; j < 64; j++)
             {
-                uint[] chunk = new uint[16];
-                Array.Copy(blocks.ToArray(), i, chunk, 0, 16);
-                uint aa = a, bb = b, cc = c, dd = d;
-                for (int j = 0; j < 64; j++)
+                uint f, g;
+                if (j < 16)
                 {
-                    uint f, g;
-                    if (j < 16)
-                    {
-                        f = (bb & cc) | ((~bb) & dd);
-                        g = (uint)j;
-                    }
-                    else if (j < 32)
-                    {
-                        f = (dd & bb) | ((~dd) & cc);
-                        g = (uint)((5 * j + 1) % 16);
-                    }
-                    else if (j < 48)
-                    {
-                        f = bb ^ cc ^ dd;
-                        g = (uint)((3 * j + 5) % 16);
-                    }
-                    else
-                    {
-                        f = cc ^ (bb | (~dd));
-                        g = (uint)((7 * j) % 16);
-                    }
-                    uint temp = dd;
-                    dd = cc;
-                    cc = bb;
-                    bb = bb + LeftRotate((aa + f + K[j] + chunk[g]), S[j]);
-                    aa = temp;
+                    f = (bb & cc) | ((~bb) & dd);
+                    g = (uint)j;
                 }
-                a += aa;
-                b += bb;
-                c += cc;
-                d += dd;
+                else if (j < 32)
+                {
+                    f = (dd & bb) | ((~dd) & cc);
+                    g = (uint)((5 * j + 1) % 16);
+                }
+                else if (j < 48)
+                {
+                    f = bb ^ cc ^ dd;
+                    g = (uint)((3 * j + 5) % 16);
+                }
+                else
+                {
+                    f = cc ^ (bb | (~dd));
+                    g = (uint)((7 * j) % 16);
+                }
+                uint temp = dd;
+                dd = cc;
+                cc = bb;
+                bb += sdvigLev((aa + f + K[j] + blocks[g]), S[j]); //1 сам бит 2 сдвиг
+                aa = temp;
             }
+            a += aa;
+            b += bb;
+            c += cc;
+            d += dd;
+            
             byte[] hashBytes = new byte[16];
             Buffer.BlockCopy(new uint[] { a, b, c, d }, 0, hashBytes, 0, 16);
+
             StringBuilder sb = new StringBuilder();
             foreach (byte i in hashBytes)
             {
                 sb.Append(i.ToString("x2"));
             }
             return sb.ToString();
-        }
-
-        private uint LeftRotate(uint x, int c)
-        {
-            return (x << c) | (x >> (32 - c));
         }
     }
 }

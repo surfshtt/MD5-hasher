@@ -32,7 +32,6 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             textBox3 = new TextBox();
-            decrypt = new Button();
             SuspendLayout();
             // 
             // encrypt
@@ -70,24 +69,12 @@
             textBox3.Size = new Size(399, 32);
             textBox3.TabIndex = 4;
             // 
-            // decrypt
-            // 
-            decrypt.Font = new Font("Segoe UI", 20F);
-            decrypt.Location = new Point(12, 212);
-            decrypt.Name = "decrypt";
-            decrypt.Size = new Size(228, 53);
-            decrypt.TabIndex = 3;
-            decrypt.Text = "Расшифровать";
-            decrypt.UseVisualStyleBackColor = true;
-            //decrypt.Click += decrypt_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(423, 281);
+            ClientSize = new Size(423, 209);
             Controls.Add(textBox3);
-            Controls.Add(decrypt);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(encrypt);
@@ -103,6 +90,5 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox3;
-        private Button decrypt;
     }
 }
